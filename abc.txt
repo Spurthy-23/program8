@@ -1,0 +1,38 @@
+ STEP 1: Start Minikube
+minikube start
+
+ STEP 2: Check Minikube status
+minikube status
+
+ STEP 3: Create program folder
+mkdir -p ~/program8
+STEP 4: Navigate to folder
+cd ~/program8
+
+ STEP 9: Delete old resources if they exist
+kubectl delete pod program-8 --ignore-not-found=true
+kubectl delete configmap nodejs-app-config --ignore-not-found=true
+
+ STEP 10: Create ConfigMap
+kubectl apply -f nodejs-configmap.yaml
+
+ STEP 11: Create Node.js Pod
+kubectl apply -f nodejs-pod.yaml
+
+ STEP 12: Check ConfigMap
+kubectl get configmaps
+
+ STEP 13: Check Pods
+kubectl get pods
+
+ STEP 14: Wait until Pod is ready
+kubectl wait --for=condition=Ready pod/program-8 --timeout=180s
+
+ STEP 15: Check Pod details
+kubectl describe pod program-8
+
+ STEP 16: Check Node.js application logs
+kubectl logs program-8
+
+ STEP 17: Port forwarding
+kubectl port-forward pod/program-8 3000:3000
